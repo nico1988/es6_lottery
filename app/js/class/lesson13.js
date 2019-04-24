@@ -129,5 +129,4 @@
     loadImg('http://i4.buimg.com/567751/2b07ee25b08930ba.png'),
     loadImg('http://i2.muimg.com/567751/5eb8190d6b2a1c9c.png')
   ]).then(showImgs)
-
 }

@@ -9,14 +9,14 @@ class Interface{
   getOmit(issue){
     let self=this;
     return new Promise((resolve,reject)=>{
-      $.ajax({
+      $.ajax({ // jq ajax請求
         url:'/get/omit',
         data:{
           issue:issue
         },
         dataType:'json',
         success:function(res){
-          self.setOmit(res.data);
+          self.setOmit(res.data); // 這裡是是实例对象的继承的方法
           resolve.call(self,res)
         },
         error:function(err){
@@ -32,7 +32,7 @@ class Interface{
    */
   getOpenCode(issue){
     let self=this;
-    return new Promise((resolve,rejet)=>{
+    return new Promise((resolve,rejet)=>{ // 返回一个promise
       $.ajax({
         url:'/get/opencode',
         data:{
@@ -44,7 +44,7 @@ class Interface{
           resolve.call(self,res);
         },
         error:function(err){
-          reject.call(err);
+          reject.call(err); // 发生错误
         }
       })
     });
