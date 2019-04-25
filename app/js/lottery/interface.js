@@ -1,5 +1,8 @@
 import $ from 'jquery';
 
+/**
+ * 服务获取相关
+ */
 class Interface{
   /**
    * [getOmit 获取遗漏数据]
@@ -7,8 +10,9 @@ class Interface{
    * @return {[type]}       [description]
    */
   getOmit(issue){
-    let self=this;
+    let self=this; // this的指向
     return new Promise((resolve,reject)=>{
+      // 箭头函数的this指向是定义时，而不是运行时
       $.ajax({ // jq ajax請求
         url:'/get/omit',
         data:{
@@ -32,7 +36,7 @@ class Interface{
    */
   getOpenCode(issue){
     let self=this;
-    return new Promise((resolve,rejet)=>{ // 返回一个promise
+    return new Promise((resolve,rejet)=>{ // 返回一个promise 可以用.then 没必要用回调函数
       $.ajax({
         url:'/get/opencode',
         data:{
@@ -40,7 +44,7 @@ class Interface{
         },
         dataType:'json',
         success:function(res){
-          self.setOpenCode(res.data);
+          self.setOpenCode(res.data); // 這裡是真正調用的時候實例對象的方法 实例对象需要实现这个方法
           resolve.call(self,res);
         },
         error:function(err){
@@ -73,6 +77,7 @@ class Interface{
       })
     });
   }
+
 }
 
 export default Interface

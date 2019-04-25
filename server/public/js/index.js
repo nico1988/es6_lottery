@@ -20392,6 +20392,9 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	/**
+	 * 计算相关
+	 *  */
 	var Calculate = function () {
 	  function Calculate() {
 	    _classCallCheck(this, Calculate);
@@ -20408,10 +20411,10 @@
 	     */
 	    value: function computeCount(active, play_name) {
 	      var count = 0;
-	      var exist = this.play_list.has(play_name);
-	      var arr = new Array(active).fill('0');
+	      var exist = this.play_list.has(play_name); // play_list 是一個map
+	      var arr = new Array(active).fill('0'); // 制定長度默認為0的數組，簡單快捷 數組初始化可以賦值一個常量 就是數組的長度，fill填充數組的元素
 	      if (exist && play_name.at(0) === 'r') {
-	        count = Calculate.combine(arr, play_name.split('')[1]).length;
+	        count = Calculate.combine(arr, play_name.split('')[1]).length; // combine是一個靜態方法
 	      }
 	      return count;
 	    }
@@ -20426,6 +20429,7 @@
 	  }, {
 	    key: 'computeBonus',
 	    value: function computeBonus(active, play_name) {
+	      // 支持任三到任八的计算
 	      var play = play_name.split('');
 	      var self = this;
 	      var arr = new Array(play[1] * 1).fill(0);
@@ -20479,8 +20483,9 @@
 	  }], [{
 	    key: 'combine',
 	    value: function combine(arr, size) {
-	      var allResult = [];
+	      var allResult = []; // 利用递归实现组合运算
 	      (function f(arr, size, result) {
+	        // 立即执行函数
 	        var arrLen = arr.length;
 	        if (size > arrLen) {
 	          return;
@@ -20496,12 +20501,12 @@
 	            } else {
 	              var newArr = [].concat(arr);
 	              newArr.splice(0, i + 1);
-	              f(newArr, size - 1, newResult);
+	              f(newArr, size - 1, newResult); // 递归
 	            }
 	          }
 	        }
 	      })(arr, size, []);
-	      return allResult;
+	      return allResult; // 返回组合
 	    }
 	  }]);
 
@@ -20530,6 +20535,9 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	/**
+	 * 服务获取相关
+	 */
 	var Interface = function () {
 	  function Interface() {
 	    _classCallCheck(this, Interface);
@@ -20544,8 +20552,9 @@
 	     * @return {[type]}       [description]
 	     */
 	    value: function getOmit(issue) {
-	      var self = this;
+	      var self = this; // this的指向
 	      return new Promise(function (resolve, reject) {
+	        // 箭头函数的this指向是定义时，而不是运行时
 	        _jquery2.default.ajax({ // jq ajax請求
 	          url: '/get/omit',
 	          data: {
@@ -20573,7 +20582,7 @@
 	    value: function getOpenCode(issue) {
 	      var self = this;
 	      return new Promise(function (resolve, rejet) {
-	        // 返回一个promise
+	        // 返回一个promise 可以用.then 没必要用回调函数
 	        _jquery2.default.ajax({
 	          url: '/get/opencode',
 	          data: {
@@ -20581,7 +20590,7 @@
 	          },
 	          dataType: 'json',
 	          success: function success(res) {
-	            self.setOpenCode(res.data);
+	            self.setOpenCode(res.data); // 這裡是真正調用的時候實例對象的方法 实例对象需要实现这个方法
 	            resolve.call(self, res);
 	          },
 	          error: function error(err) {
