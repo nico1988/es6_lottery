@@ -45,7 +45,7 @@ class Lottery extends mix(Base,Calculate,Interface,Timer){
     this.initPlayList();
     this.initNumber();
     this.updateState();
-    this.initEvent();
+    this.initEvent(); // 初始化
   }
 
   /**
@@ -76,12 +76,12 @@ class Lottery extends mix(Base,Calculate,Interface,Timer){
   }
 
   /**
-   * [initEvent 初始化事件]
+   * [initEvent 初始化事件 綁定事件]
    * @return {[type]} [description]
    */
   initEvent(){
     let self=this;
-    $('#plays').on('click','li',self.changePlayNav.bind(self));
+    $('#plays').on('click','li',self.changePlayNav.bind(self)); // 玩法綁定事件
     $('.boll-list').on('click','.btn-boll',self.toggleCodeActive.bind(self));
     $('#confirm_sel_code').on('click',self.addCode.bind(self));
     $('.dxjo').on('click','li',self.assistHandle.bind(self));

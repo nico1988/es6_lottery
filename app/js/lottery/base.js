@@ -5,7 +5,9 @@ class Base{
    * @return {[type]} [description]
    */
   initPlayList(){
-    this.play_list.set('r2',{
+    // map可以级联操作
+    // 初始化数据结构
+    this.play_list.set('r2',{ 
       bonus:6,
       tip:'从01～11中任选2个或多个号码，所选号码与开奖号码任意两个号码相同，即中奖<em class="red">6</em>元',
       name:'任二'
@@ -46,8 +48,10 @@ class Base{
    * @return {[type]} [description]
    */
   initNumber(){
+    // padStart 如果是各位要前面补充0
+    // set 投注的号码不能重复 
     for(let i=1;i<12;i++){
-      this.number.add((''+i).padStart(2,'0'))
+      this.number.add((''+i).padStart(2,'0')) 
     }
   }
 
@@ -57,12 +61,12 @@ class Base{
    */
   setOmit(omit){
     let self=this;
-    self.omit.clear();
-    for(let [index,item] of omit.entries()){
-      self.omit.set(index,item)
+    self.omit.clear(); // map 遗漏数据清空
+    for(let [index,item] of omit.entries()){ // map对象遍历 
+      self.omit.set(index,item) // 保存最新遗漏数据
     }
     $(self.omit_el).each(function(index,item){
-      $(item).text(self.omit.get(index))
+      $(item).text(self.omit.get(index)) // get 遗留数据
     });
   }
 
@@ -74,9 +78,9 @@ class Base{
     let self=this;
     self.open_code.clear();
     for(let item of code.values()){
-      self.open_code.add(item);
+      self.open_code.add(item); // set set唯一
     }
-    self.updateOpenCode&&self.updateOpenCode.call(self,code);
+    self.updateOpenCode&&self.updateOpenCode.call(self,code); // 调用更新开奖接口
   }
 
   /**
@@ -84,11 +88,11 @@ class Base{
    * @param  {[type]} e [description]
    * @return {[type]}   [description]
    */
-  toggleCodeActive(e){
+  toggleCodeActive(e){ // js委托代理 获取当前被选中的dom
     let self=this;
     let $cur=$(e.currentTarget);
     $cur.toggleClass('btn-boll-active');
-    self.getCount();
+    self.getCount(); // 计算count
   }
 
   /**
@@ -98,12 +102,12 @@ class Base{
    */
   changePlayNav(e){
     let self=this;
-    let $cur=$(e.currentTarget);
+    let $cur=$(e.currentTarget); // currentTarget 绑定在父元素上的方法  currentTarget是子元素
     $cur.addClass('active').siblings().removeClass('active');
     self.cur_play=$cur.attr('desc').toLocaleLowerCase();
     $('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
     $('.boll-list .btn-boll').removeClass('btn-boll-active');
-    self.getCount();
+    self.getCount(); // 重新计算count
   }
 
   /**
